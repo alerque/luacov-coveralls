@@ -8,6 +8,7 @@ LuaCov reporter for [coveralls.io](https://coveralls.io) service.
 Currently support 
   * [Travis CI](https://travis-ci.org)
   * [AppVeyor](https://appveyor.com)
+  * [GitHub Actions](https://github.com/features/actions)
 
 Also `luacov-coveralls` has code which support some other CI but I never test them.
 If you can test it please do that and send PR.
