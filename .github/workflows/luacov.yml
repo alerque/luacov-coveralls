@@ -1,0 +1,32 @@
+name: Luacov
+
+on: [push, pull_request]
+
+jobs:
+  busted:
+    strategy:
+      fail-fast: false
+      matrix:
+        luaVersion: ["5.3"]
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Setup Lua
+      uses: leafo/gh-actions-lua@v2
+      with:
+        luaVersion: ${{ matrix.luaVersion }}
+    - name: Setup Lua Rocks
+      uses: leafo/gh-actions-luarocks@v2
+    - name: Setup dependencies
+      run: luarocks install rockspecs/luacov-coveralls-scm-0.rockspec
+    - name: Run a test that produces coverage
+      run: lua -lluacov src/luacov/coveralls/utils.lua
+    - name: Log coverage to coveralls.io
+      if: success()
+      env:
+        LUA_PATH: './src/?.lua;;''
+      continue-on-error: true
+      run: luacov-coveralls -i utils -v
