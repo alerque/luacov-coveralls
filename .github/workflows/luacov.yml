@@ -24,6 +24,8 @@ jobs:
       run: luarocks install rockspecs/luacov-coveralls-scm-0.rockspec
     - name: Run a test that produces coverage
       run: lua -lluacov src/luacov/coveralls/utils.lua
+    - name: Dump env for dev purposes
+      run: env
     - name: Log coverage to coveralls.io
       if: success()
       env:
